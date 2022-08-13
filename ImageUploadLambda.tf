@@ -37,7 +37,7 @@ resource "aws_iam_role" "iam_role_image_upload" {
 
 
 resource "aws_iam_role_policy" "image_upload_policy_dev" {
-  name   = "backend-lambda-role-policy"
+  name   = "image-upload-lambda-role-policy"
   role   = "${aws_iam_role.iam_role_image_upload.id}"
   policy = "${data.aws_iam_policy_document.image_upload_dev.json}"
 }

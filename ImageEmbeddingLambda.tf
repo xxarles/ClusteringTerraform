@@ -24,7 +24,7 @@ resource "aws_iam_role" "iam_role_image_embedding" {
 
 
 resource "aws_iam_role_policy" "image_embedding_policy_dev" {
-  name   = "backend-lambda-role-policy"
+  name   = "image-embedding-lambda-role-policy"
   role   = "${aws_iam_role.iam_role_image_embedding.id}"
   policy = "${data.aws_iam_policy_document.image_embedding_dev.json}"
 }

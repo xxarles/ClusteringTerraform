@@ -28,6 +28,11 @@ variable "image_embedding_proj" {
   default     = "image-embedding"
 }
 
+variable "file_uploaded_sns_name" {
+  description = "File uploaded sns base name"
+  type        = string
+  default     = "new-files-uploaded"
+}
 ###############################################################
 ###############################################################
 
@@ -69,52 +74,64 @@ variable "clustering_dynamo_table_range_key" {
   default     = "folder_name"
 }
 
-
-
-variable "face_embedding_table_name" {
-  description = "Clustering dynamo table name"
-  type        = string
-  default     = "face_embeddings_table"
-}
-
-variable "face_embedding_table_billing_mode" {
-  description = "Clustering dynamo table billing_mode"
-  type        = string
-  default     = "PROVISIONED"
-}
-
-variable "face_embedding_table_read_capacity" {
-  description = "Clustering dynamo table read_capacity"
-  type        = number
-  default     = 20
-}
-
-variable "face_embedding_table_write_capacity" {
-  description = "Clustering dynamo table write_capacity"
-  type        = number
-  default     = 20
-}
-
-variable "face_embedding_table_hash_key" {
-  description = "Clustering dynamo table hash_key"
-  type        = string
-  default     = "filepath"
-}
-
-variable "face_embedding_table_range_key" {
-  description = "Clustering dynamo table range_key"
-  type        = string
-  default     = "face_rectangle"
-}
-
-variable "face_embedding_table_hash_key_type" {
+variable "clustering_dynamo_table_hash_key_type" {
   description = "Clustering dynamo table hash_key type"
   type        = string
   default     = "S"
 }
 
-variable "face_embedding_table_range_key_type" {
+variable "clustering_dynamo_table_range_key_type" {
   description = "Clustering dynamo table range_key type"
+  type        = string
+  default     = "S"
+}
+
+
+
+variable "face_embedding_table_name" {
+  description = "Face embedding dynamo table name"
+  type        = string
+  default     = "face_embeddings_table"
+}
+
+variable "face_embedding_table_billing_mode" {
+  description = "Face embedding dynamo table billing_mode"
+  type        = string
+  default     = "PROVISIONED"
+}
+
+variable "face_embedding_table_read_capacity" {
+  description = "Face embedding dynamo table read_capacity"
+  type        = number
+  default     = 20
+}
+
+variable "face_embedding_table_write_capacity" {
+  description = "Face embedding dynamo table write_capacity"
+  type        = number
+  default     = 20
+}
+
+variable "face_embedding_table_hash_key" {
+  description = "Face embedding dynamo table hash_key"
+  type        = string
+  default     = "filepath"
+}
+
+variable "face_embedding_table_range_key" {
+  description = "Face embedding dynamo table range_key"
+  type        = string
+  default     = "face_rectangle"
+}
+
+variable "face_embedding_table_hash_key_type" {
+  description = "Face embedding dynamo table hash_key type"
+  type        = string
+  default     = "S"
+}
+
+variable "face_embedding_table_range_key_type" {
+  description = "Face embedding dynamo table range_key type"
   type        = string
   default     = "S"
 }
@@ -125,7 +142,7 @@ variable "face_embedding_table_range_key_type" {
 #ECR definitions
 
 variable "clustering_ecr_repository_mutability"{
-  description = "Clustering ECR tag mutability config"
+  description = "file uploaded SNS config"
   type        = string
   default     = "MUTABLE"
 }
@@ -154,45 +171,24 @@ variable "iamge_upload_ecr_repository_mutability"{
 #################################################################
 
 #SNS definitions
-
-variable "file_uploaded_sns_minDelayTarget"{
-  description = "Clustering ECR tag mutability config"
-  type        = number
-  default     = 20
-}
-
-variable "file_uploaded_sns_maxDelayTarget"{
-  description = "Clustering ECR tag mutability config"
-  type        = number
-  default     = 20
-}
-
-variable "file_uploaded_sns_numRetries"{
-  description = "Clustering ECR tag mutability config"
-  type        = number
-  default     = 3
-}
-
-variable "file_uploaded_sns_numMaxDelayRetries"{
-  description = "Clustering ECR tag mutability config"
-  type        = number
-  default     = 0
-}
-
-variable "file_uploaded_sns_numNoDelayRetries"{
-  description = "Clustering ECR tag mutability config"
-  type        = number
-  default     = 0
-}
-
-variable "file_uploaded_sns_numMinDelayRetries"{
-  description = "Clustering ECR tag mutability config"
-  type        = number
-  default     = 0
-}
-
-variable "file_uploaded_sns_backoffFunction"{
-  description = "Image upload ECR tag mutability config"
+variable "sns_file_uploaded_delivery_policy"{
+  description = "File Uploades SNS delivery policy"
   type        = string
-  default     = "linear"
+  default     = <<EOF
+{
+  "http": {
+    "defaultHealthyRetryPolicy": {
+      "minDelayTarget": 20,
+      "maxDelayTarget": 20,
+      "numRetries": 3,
+      "numMaxDelayRetries": 0,
+      "numNoDelayRetries": 0,
+      "numMinDelayRetries": 0,
+      "backoffFunction": "linear"
+    },
+    "disableSubscriptionOverrides": false
+  }
 }
+EOF
+}
+
