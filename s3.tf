@@ -2,6 +2,7 @@
 resource "aws_s3_bucket" "image_clustering_dev_log" {
   bucket = "img-clstr-dev-log"
   acl    = "log-delivery-write"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket" "image_clustering_dev" {
@@ -15,6 +16,7 @@ resource "aws_s3_bucket" "image_clustering_dev" {
     target_bucket = aws_s3_bucket.image_clustering_dev_log.id
     target_prefix = "log/"
   }
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_acl" "image_clustering_dev" {
@@ -26,6 +28,7 @@ resource "aws_s3_bucket_acl" "image_clustering_dev" {
 resource "aws_s3_bucket" "image_clustering_prd_log" {
   bucket = "img-clstr-prd-log"
   acl    = "log-delivery-write"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket" "image_clustering_prd" {

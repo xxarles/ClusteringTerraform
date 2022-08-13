@@ -2,11 +2,13 @@
 resource "aws_ecr_repository" "image-embedding-dev" {
   name                 = "${var.image_embedding_proj}-dev"
   image_tag_mutability = "${var.iamge_upload_ecr_repository_mutability}"
+  force_delete         = false
 }
 
 resource "aws_ecr_repository" "image-embedding-prd" {
   name                 = "${var.image_embedding_proj}-prd"
   image_tag_mutability = "${var.iamge_upload_ecr_repository_mutability}"
+  force_delete         = false
 }
 
 resource "aws_ecr_repository_policy" "image-embedding-policy-dev" {

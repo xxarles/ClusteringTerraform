@@ -1,11 +1,13 @@
 resource "aws_ecr_repository" "image-upload-dev" {
   name                 = "${var.image_upload_proj}-dev"
   image_tag_mutability = "${var.iamge_upload_ecr_repository_mutability}"
+  force_delete = true
 }
 
 resource "aws_ecr_repository" "image-upload-prd" {
   name                 = "${var.image_upload_proj}-prd"
   image_tag_mutability = "${var.iamge_upload_ecr_repository_mutability}"
+  force_delete = true
 }
 
 resource "aws_ecr_repository_policy" "image-upload-policy-dev" {
