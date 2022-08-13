@@ -18,3 +18,25 @@ data "aws_caller_identity" "current" {}
 provider "aws" {
   region = "us-east-1"
 }
+
+data "aws_iam_policy_document" "lambda_base_policy" {
+  statement {
+    sid    = ""
+    effect = "Allow"
+
+    principals {
+      identifiers = ["lambda.amazonaws.com"]
+      type        = "Service"
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+terraform {
+  backend "s3" {
+    bucket = "img-clustr-terraform"
+    key    = "base_path/terraform_state"
+    region = "us-east-1"
+  }
+}

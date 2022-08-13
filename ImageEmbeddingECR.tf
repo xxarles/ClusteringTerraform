@@ -1,15 +1,16 @@
-resource "aws_ecr_repository" "image-upload-dev" {
-  name                 = "${var.image_upload_proj}-dev"
+
+resource "aws_ecr_repository" "image-embedding-dev" {
+  name                 = "${var.image_embedding_proj}-dev"
   image_tag_mutability = "${var.iamge_upload_ecr_repository_mutability}"
 }
 
-resource "aws_ecr_repository" "image-upload-prd" {
-  name                 = "${var.image_upload_proj}-prd"
+resource "aws_ecr_repository" "image-embedding-prd" {
+  name                 = "${var.image_embedding_proj}-prd"
   image_tag_mutability = "${var.iamge_upload_ecr_repository_mutability}"
 }
 
-resource "aws_ecr_repository_policy" "image-upload-policy-dev" {
-  repository = aws_ecr_repository.image-upload-dev.name
+resource "aws_ecr_repository_policy" "image-embedding-policy-dev" {
+  repository = aws_ecr_repository.image-embedding-dev.name
   policy     = <<EOF
   {
     "Version": "2008-10-17",
@@ -34,8 +35,8 @@ resource "aws_ecr_repository_policy" "image-upload-policy-dev" {
   EOF
 }
 
-resource "aws_ecr_repository_policy" "image-upload-policy-prd" {
-  repository = aws_ecr_repository.image-upload-prd.name
+resource "aws_ecr_repository_policy" "image-embedding-policy-prd" {
+  repository = aws_ecr_repository.image-embedding-prd.name
   policy     = <<EOF
   {
     "Version": "2008-10-17",

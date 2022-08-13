@@ -1,10 +1,10 @@
 
 
 resource "aws_lambda_function" "image_upload_dev" {
-  function_name = "image-upload-dev"
+  function_name = "${var.image_upload_proj}-dev"
 
   package_type = "Image"
-  image_uri = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/image-upload-dev:latest"
+  image_uri = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${var.image_upload_proj}-dev:latest"
   
   role = "${aws_iam_role.iam_role_image_upload.arn}"
   environment {
@@ -29,19 +29,6 @@ resource "aws_lambda_permission" "image_upload_dev_apigw" {
 
 
 
-data "aws_iam_policy_document" "lambda_base_policy" {
-  statement {
-    sid    = ""
-    effect = "Allow"
-
-    principals {
-      identifiers = ["lambda.amazonaws.com"]
-      type        = "Service"
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
 
 resource "aws_iam_role" "iam_role_image_upload" {
   name               = "iam_role_image_upload"

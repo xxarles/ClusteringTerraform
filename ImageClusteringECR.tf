@@ -1,11 +1,11 @@
 resource "aws_ecr_repository" "image-clustering-dev" {
-  name                 = "image-clustering-dev"
-  image_tag_mutability = "IMMUTABLE"
+  name                 = "${var.image_clustering_proj}-dev"
+  image_tag_mutability = "${var.clustering_ecr_repository_mutability}"
 }
 
 resource "aws_ecr_repository" "image-clustering-prd" {
-  name                 = "image-clustering-prd"
-  image_tag_mutability = "IMMUTABLE"
+  name                 = "${var.image_clustering_proj}-prd"
+  image_tag_mutability = "${var.clustering_ecr_repository_mutability}"
 }
 
 resource "aws_ecr_repository_policy" "image-clustering-policy-dev" {
