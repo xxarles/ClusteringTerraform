@@ -3,9 +3,9 @@ resource "aws_api_gateway_rest_api" "image_upload_dev" {
   name        = "image-upload-dev"
   description = "Image Upload Dev"
 
-  endpoint_configuration {
-    types            = ["PRIVATE"]
-  }
+  #endpoint_configuration {
+  #  types            = ["PRIVATE"]
+  #}
 }
 
 resource "aws_api_gateway_resource" "image_upload_proxy" {
@@ -50,34 +50,6 @@ resource "aws_api_gateway_integration" "image_upload_dev_lambda_root" {
   uri                     = "${aws_lambda_function.image_upload_dev.invoke_arn}"
 }
 
-
-resource "aws_api_gateway_rest_api_policy" "image_upload_dev" {
-  rest_api_id = aws_api_gateway_rest_api.image_upload_dev.id
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "*"
-      },
-      "Action": "execute-api:Invoke",
-      "Resource": "${aws_api_gateway_rest_api.image_upload_dev.execution_arn}",
-      "Condition": {
-        "IpAddress": {
-          "aws:SourceIp": "189.120.79.84"
-        }
-      }
-    }
-  ]
-}
-EOF
-}
-
-
-
 resource "aws_api_gateway_deployment" "image_upload_dev" {
   depends_on = [
     "aws_api_gateway_integration.image_upload_dev_lambda",
@@ -86,6 +58,36 @@ resource "aws_api_gateway_deployment" "image_upload_dev" {
 
   rest_api_id = "${aws_api_gateway_rest_api.image_upload_dev.id}"
   stage_name  = "entry"
-  
 
 }
+
+resource "aws_api_gateway_stage" "image_upload_dev" {
+  deployment_id = aws_api_gateway_deployment.image_upload_dev.id
+  rest_api_id   = aws_api_gateway_rest_api.image_upload_dev.id
+  stage_name    = "dev"
+}
+
+
+resource "aws_api_gateway_usage_plan" "image_upload_dev" {
+  name         = "Image Upload usage plan"
+  description  = "my description"
+
+  api_stages {
+    api_id = aws_api_gateway_rest_api.image_upload_dev.id
+    stage  = aws_api_gateway_stage.image_upload_dev.stage_name
+  }
+
+  quota_settings {
+    limit  = 150
+    offset = 2
+    period = "WEEK"
+  }
+
+  throttle_settings {
+    burst_limit = 5
+    rate_limit  = 10
+  }
+}
+
+
+
