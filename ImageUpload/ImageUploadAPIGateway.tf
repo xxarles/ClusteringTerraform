@@ -51,6 +51,33 @@ resource "aws_api_gateway_integration" "image_upload_dev_lambda_root" {
 }
 
 
+resource "aws_api_gateway_rest_api_policy" "image_upload_dev" {
+  rest_api_id = aws_api_gateway_rest_api.image_upload_dev.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "execute-api:Invoke",
+      "Resource": "${aws_api_gateway_rest_api.image_upload_dev.execution_arn}",
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": "189.120.79.84"
+        }
+      }
+    }
+  ]
+}
+EOF
+}
+
+
+
 resource "aws_api_gateway_deployment" "image_upload_dev" {
   depends_on = [
     "aws_api_gateway_integration.image_upload_dev_lambda",
