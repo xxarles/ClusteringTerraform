@@ -4,7 +4,7 @@ resource "aws_lambda_function" "image_embedding_dev" {
   function_name = "${var.image_embedding_proj}-dev"
 
   package_type = "Image"
-  image_uri = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/image-embedding-dev:latest"
+  image_uri = "${var.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/image-embedding-dev:latest"
   
   role = "${aws_iam_role.iam_role_image_embedding.arn}"
   environment {

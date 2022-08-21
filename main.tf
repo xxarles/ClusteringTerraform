@@ -1,3 +1,4 @@
+
 terraform {
   required_providers {
     aws = {
@@ -6,37 +7,36 @@ terraform {
     }
   }
 
-  required_version = ">= 0.14.9"
+    backend "s3" {
+    bucket = "img-clstr-terraform"
+    key    = "img-clstr/terraform_state"
+    region = "us-east-1"
+  }
 }
 
+provider "aws" {
+  region = "us-east-1"
+}
 
 data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
 
 
-provider "aws" {
-  region = "us-east-1"
+
+
+module "SharedResources"{
+  source              = "./SharedResources"
+  account_id          = data.aws_caller_identity.current.account_id
+  region              = data.aws_region.current.name
+  oauth_client_id     = var.OAUTH_CLIENT_ID
+  oauth_client_secret = var.OAUTH_CLIENT_SECRET
 }
 
-data "aws_iam_policy_document" "lambda_base_policy" {
-  statement {
-    sid    = ""
-    effect = "Allow"
 
-    principals {
-      identifiers = ["lambda.amazonaws.com"]
-      type        = "Service"
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-terraform {
-  backend "s3" {
-    bucket = "img-clustr-terraform"
-    key    = "base_path/terraform_state"
-    region = "us-east-1"
-  }
+module "ImageUpload"{
+  source      = "./ImageUpload"
+  account_id  = data.aws_caller_identity.current.account_id
+  region      = data.aws_region.current.name
+  cognito_arn = ["${module.SharedResources.cognito_arn_dev}"]
 }
