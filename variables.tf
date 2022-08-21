@@ -28,11 +28,7 @@ variable "image_embedding_proj" {
   default     = "image-embedding"
 }
 
-variable "file_uploaded_sns_name" {
-  description = "File uploaded sns base name"
-  type        = string
-  default     = "new-files-uploaded"
-}
+
 ###############################################################
 ###############################################################
 
@@ -167,30 +163,7 @@ variable "iamge_upload_ecr_repository_mutability"{
 #Lambda definitions
 #TODO
 
-#################################################################
-#################################################################
 
-#SNS definitions
-variable "sns_file_uploaded_delivery_policy"{
-  description = "File Uploades SNS delivery policy"
-  type        = string
-  default     = <<EOF
-{
-  "http": {
-    "defaultHealthyRetryPolicy": {
-      "minDelayTarget": 20,
-      "maxDelayTarget": 20,
-      "numRetries": 3,
-      "numMaxDelayRetries": 0,
-      "numNoDelayRetries": 0,
-      "numMinDelayRetries": 0,
-      "backoffFunction": "linear"
-    },
-    "disableSubscriptionOverrides": false
-  }
-}
-EOF
-}
 
 #################################################################
 #################################################################
