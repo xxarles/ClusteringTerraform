@@ -14,6 +14,12 @@ variable "account_id"{
   type        = string
 }
 
+variable "region"{
+  description = "Account default region used to terraform"
+  type        = string
+}
+
+
 #################################################################
 ############################ ECR ################################
 #################################################################
@@ -22,16 +28,6 @@ variable "image_upload_ecr_repository_mutability"{
   description = "Image upload ECR tag mutability config"
   type        = string
   default     = "MUTABLE"
-}
-
-variable "image_upload_ecr_provisioned_command"{
-  description = "Image upload ECR dummy container"
-  type        = string
-  default     = <<-EOT
-      docker pull alpine
-      docker tag alpine dummy_container
-      docker push dummy_container
-    EOT
 }
 
 variable "image_upload_ecr_policy"{
