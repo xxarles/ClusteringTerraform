@@ -5,6 +5,7 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"
 }
+
 ###############################################################
 ###############################################################
 
@@ -32,105 +33,7 @@ variable "image_embedding_proj" {
 ###############################################################
 ###############################################################
 
-#Dynamo table definitions
 
-variable "clustering_dynamo_table_name" {
-  description = "Clustering dynamo table name"
-  type        = string
-  default     = "clustering_status"
-}
-
-variable "clustering_dynamo_table_billing_mode" {
-  description = "Clustering dynamo table billing_mode"
-  type        = string
-  default     = "PROVISIONED"
-}
-
-variable "clustering_dynamo_table_read_capacity" {
-  description = "Clustering dynamo table read_capacity"
-  type        = number
-  default     = 20
-}
-
-variable "clustering_dynamo_table_write_capacity" {
-  description = "Clustering dynamo table write_capacity"
-  type        = number
-  default     = 20
-}
-
-variable "clustering_dynamo_table_hash_key" {
-  description = "Clustering dynamo table hash_key"
-  type        = string
-  default     = "user_id"
-}
-
-variable "clustering_dynamo_table_range_key" {
-  description = "Clustering dynamo table range_key"
-  type        = string
-  default     = "folder_name"
-}
-
-variable "clustering_dynamo_table_hash_key_type" {
-  description = "Clustering dynamo table hash_key type"
-  type        = string
-  default     = "S"
-}
-
-variable "clustering_dynamo_table_range_key_type" {
-  description = "Clustering dynamo table range_key type"
-  type        = string
-  default     = "S"
-}
-
-
-
-variable "face_embedding_table_name" {
-  description = "Face embedding dynamo table name"
-  type        = string
-  default     = "face_embeddings_table"
-}
-
-variable "face_embedding_table_billing_mode" {
-  description = "Face embedding dynamo table billing_mode"
-  type        = string
-  default     = "PROVISIONED"
-}
-
-variable "face_embedding_table_read_capacity" {
-  description = "Face embedding dynamo table read_capacity"
-  type        = number
-  default     = 20
-}
-
-variable "face_embedding_table_write_capacity" {
-  description = "Face embedding dynamo table write_capacity"
-  type        = number
-  default     = 20
-}
-
-variable "face_embedding_table_hash_key" {
-  description = "Face embedding dynamo table hash_key"
-  type        = string
-  default     = "filepath"
-}
-
-variable "face_embedding_table_range_key" {
-  description = "Face embedding dynamo table range_key"
-  type        = string
-  default     = "face_rectangle"
-}
-
-variable "face_embedding_table_hash_key_type" {
-  description = "Face embedding dynamo table hash_key type"
-  type        = string
-  default     = "S"
-}
-
-variable "face_embedding_table_range_key_type" {
-  description = "Face embedding dynamo table range_key type"
-  type        = string
-  default     = "S"
-}
 
 ###############################################################
 ###############################################################
@@ -149,22 +52,16 @@ variable "face_embedding_ecr_repository_mutability"{
   default     = "MUTABLE"
 }
 
-variable "iamge_upload_ecr_repository_mutability"{
-  description = "Image upload ECR tag mutability config"
+#################################################################
+####################### OAUTH INFOS #############################
+#################################################################
+
+variable "OAUTH_CLIENT_ID"{
+  description = "Client Id for google oauth should come from env variable TF_VAR_OAUTH_CLIENT_ID"
   type        = string
-  default     = "MUTABLE"
 }
 
-
-#################################################################
-#################################################################
-
-
-#Lambda definitions
-#TODO
-
-
-
-#################################################################
-#################################################################
-
+variable "OAUTH_CLIENT_SECRET"{
+  description = "Client Id for google oauth should come from env variable TF_VAR_OAUTH_CLIENT_SECRET"
+  type        = string
+}

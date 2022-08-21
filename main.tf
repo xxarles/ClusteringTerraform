@@ -23,8 +23,20 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 
+
+
+module "SharedResources"{
+  source              = "./SharedResources"
+  account_id          = data.aws_caller_identity.current.account_id
+  region              = data.aws_region.current.name
+  oauth_client_id     = var.OAUTH_CLIENT_ID
+  oauth_client_secret = var.OAUTH_CLIENT_SECRET
+}
+
+
 module "ImageUpload"{
-  source     = "./ImageUpload"
-  account_id = data.aws_caller_identity.current.account_id
-  region     = data.aws_region.current.name
+  source      = "./ImageUpload"
+  account_id  = data.aws_caller_identity.current.account_id
+  region      = data.aws_region.current.name
+  cognito_arn = ["${module.SharedResources.cognito_arn_dev}"]
 }

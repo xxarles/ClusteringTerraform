@@ -2,4 +2,4 @@ aws ecr get-login-password --region ${region} | docker login --username AWS --pa
 docker pull alpine
 docker tag alpine ${account_id}.dkr.ecr.${region}.amazonaws.com/${proj_name}-dev:latest
 docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/${proj_name}-dev:latest
-sleep 15
+sleep 45

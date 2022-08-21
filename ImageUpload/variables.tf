@@ -19,6 +19,10 @@ variable "region"{
   type        = string
 }
 
+variable "cognito_arn"{
+  description = "Cognito arn used for authentication"
+  type        = list(string)
+}
 
 #################################################################
 ############################ ECR ################################

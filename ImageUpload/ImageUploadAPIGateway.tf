@@ -18,7 +18,9 @@ resource "aws_api_gateway_method" "image_upload_proxy" {
   rest_api_id   = "${aws_api_gateway_rest_api.image_upload_dev.id}"
   resource_id   = "${aws_api_gateway_resource.image_upload_proxy.id}"
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.upload_lambda_api_authorizer.id
+
 }
 
 resource "aws_api_gateway_integration" "image_upload_dev_lambda" {
@@ -36,7 +38,9 @@ resource "aws_api_gateway_method" "image_upload_proxy_root" {
   rest_api_id   = "${aws_api_gateway_rest_api.image_upload_dev.id}"
   resource_id   = "${aws_api_gateway_rest_api.image_upload_dev.root_resource_id}"
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.upload_lambda_api_authorizer.id
+
 }
 
 
@@ -89,5 +93,10 @@ resource "aws_api_gateway_usage_plan" "image_upload_dev" {
   }
 }
 
-
+resource "aws_api_gateway_authorizer" "upload_lambda_api_authorizer" {
+  name                   = "ImageClustering_autorizer"
+  type                   = "COGNITO_USER_POOLS"
+  rest_api_id            = aws_api_gateway_rest_api.image_upload_dev.id
+  provider_arns          = var.cognito_arn
+}
 

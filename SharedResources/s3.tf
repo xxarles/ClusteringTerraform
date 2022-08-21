@@ -1,12 +1,12 @@
 
 resource "aws_s3_bucket" "image_clustering_dev_log" {
-  bucket = "img-clstr-dev-log"
-  acl    = "log-delivery-write"
-  force_destroy = true
+  bucket = "${var.proj_name}-dev-log"
+  acl    = var.s3_logging_acl
+  force_destroy = var.easy_terraform_destroy
 }
 
 resource "aws_s3_bucket" "image_clustering_dev" {
-  bucket = "img-clstr-dev"
+  bucket = "${var.proj_name}-dev"
 
   tags = {
     Name        = "Image Clustering Dev Bucket"
@@ -14,9 +14,9 @@ resource "aws_s3_bucket" "image_clustering_dev" {
   }
   logging {
     target_bucket = aws_s3_bucket.image_clustering_dev_log.id
-    target_prefix = "log/"
+    target_prefix = var.log_bucket_prefix
   }
-  force_destroy = true
+  force_destroy = var.easy_terraform_destroy
 }
 
 resource "aws_s3_bucket_acl" "image_clustering_dev" {
@@ -26,13 +26,13 @@ resource "aws_s3_bucket_acl" "image_clustering_dev" {
 
 
 resource "aws_s3_bucket" "image_clustering_prd_log" {
-  bucket = "img-clstr-prd-log"
-  acl    = "log-delivery-write"
-  force_destroy = true
+  bucket = "${var.proj_name}-prd-log"
+  acl    = var.s3_logging_acl
+  force_destroy = var.easy_terraform_destroy
 }
 
 resource "aws_s3_bucket" "image_clustering_prd" {
-  bucket = "img-clstr-prd"
+  bucket = "${var.proj_name}-prd"
 
   tags = {
     Name        = "Image Clustering Prod Bucket"
@@ -40,7 +40,7 @@ resource "aws_s3_bucket" "image_clustering_prd" {
   }
   logging {
     target_bucket = aws_s3_bucket.image_clustering_prd_log.id
-    target_prefix = "log/"
+    target_prefix = var.log_bucket_prefix
   }
 }
 
