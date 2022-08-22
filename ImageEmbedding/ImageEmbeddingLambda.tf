@@ -60,3 +60,8 @@ resource "aws_lambda_permission" "lambda_embedding_allow_sns" {
 }
 
 
+resource "aws_sns_topic_subscription" "file_uploaded_embedding_target" {
+  topic_arn = var.file_uploaded_sns_dev_arn
+  protocol  = "lambda"
+  endpoint  = aws_lambda_function.image_embedding_dev.arn
+}
