@@ -46,11 +46,6 @@ variable "clustering_ecr_repository_mutability"{
   default     = "MUTABLE"
 }
 
-variable "face_embedding_ecr_repository_mutability"{
-  description = "Face embedding ECR tag mutability config"
-  type        = string
-  default     = "MUTABLE"
-}
 
 #################################################################
 ####################### OAUTH INFOS #############################

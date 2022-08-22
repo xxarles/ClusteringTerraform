@@ -1,10 +1,10 @@
 
 
 resource "aws_lambda_function" "image_embedding_dev" {
-  function_name = "${var.image_embedding_proj}-dev"
+  function_name = "${var.image_embedding_proj}_dev"
 
   package_type = "Image"
-  image_uri = "${var.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/image-embedding-dev:latest"
+  image_uri = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.image_embedding_proj}_dev:latest"
   
   role = "${aws_iam_role.iam_role_image_embedding.arn}"
   environment {
@@ -12,6 +12,8 @@ resource "aws_lambda_function" "image_embedding_dev" {
       ENV = "dev"
     }
   }
+
+  depends_on = [aws_ecr_repository.image-embedding-dev]
 }
 
 
@@ -24,7 +26,7 @@ resource "aws_iam_role" "iam_role_image_embedding" {
 
 
 resource "aws_iam_role_policy" "image_embedding_policy_dev" {
-  name   = "image-embedding-lambda-role-policy"
+  name   = "${var.image_embedding_proj}_lambda_role_policy"
   role   = "${aws_iam_role.iam_role_image_embedding.id}"
   policy = "${data.aws_iam_policy_document.image_embedding_dev.json}"
 }
@@ -52,9 +54,9 @@ data "aws_iam_policy_document" "image_embedding_dev" {
 resource "aws_lambda_permission" "lambda_embedding_allow_sns" {
     statement_id = "AllowExecutionFromSNS"
     action = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.image_embedding_dev.function_name
     principal = "sns.amazonaws.com"
-    source_arn = aws_sns_topic.file_uploaded_dev.arn
+    function_name = aws_lambda_function.image_embedding_dev.function_name
+    source_arn = var.file_uploaded_sns_dev_arn
 }
 
 

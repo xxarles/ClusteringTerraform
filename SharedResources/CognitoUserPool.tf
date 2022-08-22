@@ -45,7 +45,7 @@ resource "aws_cognito_user_pool_client" "client" {
   logout_urls                           = var.logout_urls
   allowed_oauth_flows                   = var.allowed_oauth_flows
   allowed_oauth_flows_user_pool_client  = var.allowed_oauth_flows_user_pool_client
-  allowed_oauth_scopes                  = var.allowed_oauth_scopes
+  allowed_oauth_scopes                  = aws_cognito_resource_server.resource_server.scope_identifiers
 
   supported_identity_providers  = [aws_cognito_identity_provider.cognito_google_provider.provider_name]
   

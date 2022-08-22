@@ -41,3 +41,10 @@ module "ImageUpload"{
   cognito_arn               = ["${module.SharedResources.cognito_arn_dev}"]
   cognito_scope_identifiers = module.SharedResources.cognito_scope_identifiers
 }
+
+module "ImageEmbedding"{
+  source                    = "./ImageEmbedding"
+  account_id                = data.aws_caller_identity.current.account_id
+  region                    = data.aws_region.current.name
+  file_uploaded_sns_dev_arn = module.ImageUpload.file_uploaded_sns_dev_arn
+}

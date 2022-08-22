@@ -40,7 +40,7 @@ resource "aws_api_gateway_method" "image_upload_proxy_root" {
   http_method   = "ANY"
   authorization = "COGNITO_USER_POOLS"
   authorizer_id = aws_api_gateway_authorizer.upload_lambda_api_authorizer.id
-  authorization_scopes = var.cognito_scope_identifiers
+  # authorization_scopes = var.cognito_scope_identifiers
 
 }
 
@@ -57,8 +57,8 @@ resource "aws_api_gateway_integration" "image_upload_dev_lambda_root" {
 
 resource "aws_api_gateway_deployment" "image_upload_dev" {
   depends_on = [
-    "aws_api_gateway_integration.image_upload_dev_lambda",
-    "aws_api_gateway_integration.image_upload_dev_lambda_root",
+    aws_api_gateway_integration.image_upload_dev_lambda,
+    aws_api_gateway_integration.image_upload_dev_lambda_root,
   ]
 
   rest_api_id = "${aws_api_gateway_rest_api.image_upload_dev.id}"

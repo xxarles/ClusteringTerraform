@@ -4,7 +4,7 @@ resource "aws_lambda_function" "image_upload_dev" {
   function_name = "${var.image_upload_proj}-dev"
 
   package_type = "Image"
-  image_uri = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.image_upload_proj}-dev:latest"
+  image_uri = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.image_upload_proj}_dev:latest"
   
   role = "${aws_iam_role.iam_role_image_upload.arn}"
   environment {

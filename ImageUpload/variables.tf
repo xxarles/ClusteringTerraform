@@ -6,7 +6,7 @@
 variable "image_upload_proj" {
   description = "Image upload project name"
   type        = string
-  default     = "image-upload"
+  default     = "image_upload"
 }
 
 variable "account_id"{
