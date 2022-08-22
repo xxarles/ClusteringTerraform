@@ -120,3 +120,7 @@ EOF
 #################################################################
 
 
+variable "cognito_scope_identifiers"{
+  description = "Scope identifier for API Gateways"
+  type        = list(string)
+}

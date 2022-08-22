@@ -12,6 +12,8 @@ resource "aws_lambda_function" "image_upload_dev" {
       ENV = "dev"
     }
   }
+  depends_on = [aws_ecr_repository.image-upload-dev]
+
 }
 
 

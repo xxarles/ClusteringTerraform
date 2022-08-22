@@ -87,3 +87,14 @@ resource "aws_cognito_user_pool_domain" "iamge_clustering_domain" {
   domain       = var.proj_name
   user_pool_id = aws_cognito_user_pool.image_clustering_user_pool_dev.id
 }
+
+resource "aws_cognito_resource_server" "resource_server" {
+  name         = "ImageClusteringUserPoolServer"
+  identifier   = "https://api.${var.proj_name}"
+  user_pool_id = "${aws_cognito_user_pool.image_clustering_user_pool_dev.id}"
+
+  scope {
+    scope_name        = "all"
+    scope_description = "Get access to all API Gateway endpoints."
+  }
+}

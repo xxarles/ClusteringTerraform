@@ -40,6 +40,7 @@ resource "aws_api_gateway_method" "image_upload_proxy_root" {
   http_method   = "ANY"
   authorization = "COGNITO_USER_POOLS"
   authorizer_id = aws_api_gateway_authorizer.upload_lambda_api_authorizer.id
+  authorization_scopes = var.cognito_scope_identifiers
 
 }
 

@@ -18,3 +18,8 @@ output "client_secret" {
   value       = aws_cognito_user_pool_client.client.client_secret
   sensitive   = true
 }
+
+output "cognito_scope_identifiers"{
+  description = "Scope identifier for API Gateways"
+  value     = aws_cognito_resource_server.resource_server.scope_identifiers
+}
