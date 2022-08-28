@@ -76,13 +76,13 @@ variable "clustering_dynamo_table_write_capacity" {
 variable "clustering_dynamo_table_hash_key" {
   description = "Clustering dynamo table hash_key"
   type        = string
-  default     = "user_id"
+  default     = "user_folder"
 }
 
 variable "clustering_dynamo_table_range_key" {
   description = "Clustering dynamo table range_key"
   type        = string
-  default     = "folder_name"
+  default     = "filename"
 }
 
 variable "clustering_dynamo_table_hash_key_type" {
