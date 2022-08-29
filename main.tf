@@ -48,3 +48,10 @@ module "ImageEmbedding"{
   region                    = data.aws_region.current.name
   file_uploaded_sns_dev_arn = module.ImageUpload.file_uploaded_sns_dev_arn
 }
+
+module "ImageClustering"{
+  source                    = "./ImageClustering"
+  account_id                = data.aws_caller_identity.current.account_id
+  region                    = data.aws_region.current.name
+  face_extracted_sns_dev_arn = module.ImageEmbedding.face_extracted_sns_dev_arn
+}

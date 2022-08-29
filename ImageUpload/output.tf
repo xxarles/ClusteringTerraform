@@ -7,6 +7,7 @@ output "file_uploaded_prd_url"{
     value = aws_api_gateway_deployment.image_upload_dev.invoke_url
 }
 
+
 output "file_uploaded_dev_url"{
     value = aws_api_gateway_deployment.image_upload_dev.invoke_url
 }
