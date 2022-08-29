@@ -2,8 +2,12 @@ output "image_upload_dev_url" {
   value = "${module.ImageUpload.file_uploaded_dev_url}"
 }
 
-output "file_uplaod_sns_arn_dev" {
+output "file_uploaded_sns_arn_dev" {
   value = "${module.ImageUpload.file_uploaded_sns_dev_arn}"
+}
+
+output "face_extracted_sns_arn_dev" {
+  value = "${module.ImageEmbedding.face_extracted_sns_dev_arn}"
 }
 
 # output "image_upload_prd_url" {
@@ -26,3 +30,4 @@ output "client_secret" {
   value       = module.SharedResources.client_id
   sensitive   = true
 }
+

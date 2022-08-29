@@ -147,6 +147,57 @@ variable "face_embedding_table_range_key_type" {
   default     = "S"
 }
 
+
+
+
+variable "clusterings_table_name" {
+  description = "Clusterings dynamo table name"
+  type        = string
+  default     = "clusterings_table"
+}
+
+variable "clusterings_table_billing_mode" {
+  description = "Clusterings dynamo table billing_mode"
+  type        = string
+  default     = "PROVISIONED"
+}
+
+variable "clusterings_table_read_capacity" {
+  description = "Clusterings dynamo table read_capacity"
+  type        = number
+  default     = 20
+}
+
+variable "clusterings_table_write_capacity" {
+  description = "Clusterings dynamo table write_capacity"
+  type        = number
+  default     = 20
+}
+
+variable "clusterings_table_hash_key" {
+  description = "Clusterings dynamo table hash_key"
+  type        = string
+  default     = "user_folder"
+}
+
+variable "clusterings_table_range_key" {
+  description = "Clusterings dynamo table range_key"
+  type        = string
+  default     = "version"
+}
+
+variable "clusterings_table_hash_key_type" {
+  description = "Clusterings dynamo table hash_key type"
+  type        = string
+  default     = "S"
+}
+
+variable "clusterings_table_range_key_type" {
+  description = "Clusterings dynamo table range_key type"
+  type        = string
+  default     = "S"
+}
+
 #################################################################
 ########################### COGINITO ############################
 #################################################################

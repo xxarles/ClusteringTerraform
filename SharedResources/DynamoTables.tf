@@ -45,3 +45,28 @@ resource "aws_dynamodb_table" "face_embeddings_table_dev" {
     Environment = "dev"
   }
 }
+
+
+resource "aws_dynamodb_table" "clusterings_table_dev" {
+  name           = "${var.clusterings_table_name}_dev"
+  billing_mode   = var.clusterings_table_billing_mode
+  read_capacity  = var.clusterings_table_read_capacity
+  write_capacity = var.clusterings_table_write_capacity
+  hash_key       = var.clusterings_table_hash_key
+  range_key      = var.clusterings_table_range_key
+
+  attribute {
+    name =  var.clusterings_table_hash_key
+    type = var.clusterings_table_hash_key_type
+  }
+
+  attribute {
+    name = var.clusterings_table_range_key
+    type = var.clusterings_table_range_key_type
+  }
+
+  tags = {
+    Name        = "clusteringss_table"
+    Environment = "dev"
+  }
+}
