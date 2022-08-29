@@ -12,8 +12,9 @@ resource "aws_lambda_function" "image_embedding_dev" {
       ENV = "dev"
     }
   }
-
-  depends_on = [aws_ecr_repository.image-embedding-dev]
+  timeout     = var.lambda_timeout
+  memory_size = var.lambda_memory_size
+  depends_on  = [aws_ecr_repository.image-embedding-dev]
 }
 
 

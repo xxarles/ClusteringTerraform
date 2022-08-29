@@ -126,13 +126,13 @@ variable "face_embedding_table_write_capacity" {
 variable "face_embedding_table_hash_key" {
   description = "Face embedding dynamo table hash_key"
   type        = string
-  default     = "filepath"
+  default     = "user_folder"
 }
 
 variable "face_embedding_table_range_key" {
   description = "Face embedding dynamo table range_key"
   type        = string
-  default     = "face_rectangle"
+  default     = "filename"
 }
 
 variable "face_embedding_table_hash_key_type" {

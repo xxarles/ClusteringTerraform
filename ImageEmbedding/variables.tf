@@ -52,3 +52,15 @@ variable "image_embedding_ecr_force_delete" {
     type        = string
     default     = true
 }
+
+variable "lambda_timeout" {
+    description = "Lambda embedding timeout" 
+    type        = number
+    default     = 120
+}
+
+variable "lambda_memory_size" {
+    description = "Lambda embedding timeout" 
+    type        = number
+    default     = 2000
+}
